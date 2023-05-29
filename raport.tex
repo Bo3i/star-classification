@@ -4,7 +4,7 @@
 \usepackage{float}
 \usepackage{makeidx}
 
-\title{Klasyfikacja ciał niebieskich???}
+\title{Klasyfikacja ciał niebieskich}
 \author{Agata Mironowa\and Palina Sauranskaya \and Jakub Kindlik }
 \date{April 2023}
 \begin{document}
@@ -14,12 +14,43 @@
 \section{Streszcznie}
 to na koniec
 \section{Słowa kluczowe}
+Klasyfikacja, Drzewa decyzyjne, Ciała niebieskie, ...
 \section{Wprowadzenie}
 \section{Przedmiot badań}
-Cel
+Celem projektu jest stworzenie hybrydowego modelu klasyfikującego ciała niebieskie na podstawie ich parametrów fizycznych.
+W tym celu zostaną wykorzystane trzy metody klasyfikacji: X, drzewa decyzyjne oraz X.
+W pierwszej części projektu zostaną przeprowadzone badania na rzeczywistych danych z bazy Sloan Digital Sky Survey
+udostępnionej do domeny publicznej, a następnie na sztucznych danych.
+W ostatniej części projektu zostanie stworzony model hybrydowy, który będzie łączył w sobie wszystkie trzy metody klasyfikacji.
 \section{Dane}
+Dane pochodzą ze strony Kaggle.com i są udostępnione do domeny publicznej. Zbiór danych został udostępniony przez
+użytkownika FEDESORIANO i jest zbiorem danych z bazy Sloan Digital Sky Survey udostępnionym do domeny publicznej.
+Zbiór danych zawiera informacje o 10 tysiącach ciał niebieskich.
 \subsection{Opis danych}
+Każde ciało niebieskie jest opisane przez 17 parametrów fizycznych.
+\begin{enumerate}
+    \item obj\_ID = Unikalny identyfikator obiektu w katalogu obrazów używanym przez CAS.
+    \item alpha = Kąt rektascensji (w epoce J2000).
+    \item delta = Kąt deklinacji (w epoce J2000).
+    \item u = Filtr ultrawioletowy w systemie fotometrycznym.
+    \item g = Filtr zielony w systemie fotometrycznym.
+    \item r = Filtr czerwony w systemie fotometrycznym.
+    \item i = Filtr bliskiej podczerwieni w systemie fotometrycznym.
+    \item z = Filtr podczerwieni w systemie fotometrycznym.
+    \item run\_ID = Numer skanu używany do identyfikacji konkretnego przebiegu.
+    \item rereun\_ID = Numer powtórzenia, określający sposób przetworzenia obrazu.
+    \item cam\_col = Kolumna kamery, służąca do identyfikacji linii skanu w ramach przebiegu.
+    \item field\_ID = Numer pola, służący do identyfikacji każdego pola.
+    \item spec\_obj\_ID = Unikalny identyfikator używany dla obiektów spektroskopowych (oznacza to, że dwie różne obserwacje o tym samym spec\_obj\_ID muszą mieć taką samą klasę wynikową).
+    \item class = Klasa obiektu (galaktyka, gwiazda lub kwazar).
+    \item redshift = Wartość przesunięcia ku czerwieni oparta na wzroście długości fali.
+    \item plate = ID płyty, identyfikujące każdą płytę w SDSS.
+    \item MJD = Zmodyfikowana data juliańska, używana do wskazania momentu pobrania danych SDSS.
+    \item fiber\_ID = ID włókna, które skierowało światło na płaszczyznę ogniskową w każdej obserwacji.
+    \end{enumerate}
 \subsection{Przygotowanie danych}
+Dane zostały pobrane ze strony Kaggle.com w formacie csv. Następnie zostały wczytane do pliku Jupyter Notebook \"
+Prepare\_sets\". W tym pliku dane zostały podzielone na zbiór treningowy i testowy w proporcji 80\% do 20\%.
 \subsection{Wstępna analiza danych}
 
 \section{Opis metod}

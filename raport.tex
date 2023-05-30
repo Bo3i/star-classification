@@ -54,7 +54,19 @@ Prepare\_sets\". W tym pliku dane zostały podzielone na zbiór treningowy i tes
 \subsection{Wstępna analiza danych}
 
 \section{Opis metod}
-\subsection{Metoda 1}
+W naszym projekcie zedydowaliśmy się na skorzystanie z trzech metod klasyfikacji: lasu losowego, drzewa decyzyjnego oraz k najbliższych sąsiadów.
+\subsection{Las losowy}
+Metoda lasu losowego, znana również jako las decyzyjny (random forest), jest popularnym algorytmem uczenia maszynowego stosowanym w problemach klasyfikacji, regresji i innych zadań predykcyjnych. Wykorzystuje połączenie wielu drzew decyzyjnych, które są tworzone na podstawie losowych podzbiorów danych uczących i losowych podzbiorów cech. \newline
+Ogólne działanie algorytmu lasu losowego można opisać następująco:
+\begin{enumerate}
+    \item Losowy wybór próbek: Losowo wybiera się próbki z dostępnych danych uczących, tworząc podzbiór danych dla każdego drzewa decyzyjnego w lesie. Dzięki temu metoda zapewnia różnorodność danych dla każdego drzewa, co prowadzi do większej dokładności modelu.
+
+    \item Losowy wybór cech: Na każdym etapie tworzenia drzewa losuje się podzbiór cech (zwykle bez powtórzeń) spośród dostępnych cech. Ta technika pomaga uniknąć dominacji pojedynczych cech i umożliwia modelowi uwzględnienie wielu aspektów danych wejściowych.
+
+    \item Tworzenie drzew decyzyjnych: Dla każdego podzbioru danych i cech tworzy się drzewo decyzyjne. Drzewa są tworzone na podstawie reguł decyzyjnych, które pozwalają przewidywać wartość docelową na podstawie wartości cech.
+
+    \item Klasyfikacja i predykcja: Gdy cały las decyzyjny jest zbudowany, klasyfikacja i predykcja odbywają się na podstawie głosowania lub średniej wyników ze wszystkich drzew. W przypadku klasyfikacji, klasa, która otrzymuje największą liczbę głosów, jest uznawana za wynik. W przypadku regresji, średnia wartość prognozowana przez wszystkie drzewa jest brana pod uwagę jako wynik.
+\end{enumerate}
 \subsection{Metoda 2}
 \subsection{Metoda 3}
 \subsection{Model hybrydowy}

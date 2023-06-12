@@ -2,6 +2,7 @@
 \usepackage{polski}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{hyperref}
 \usepackage{makeidx}
 
 \title{Klasyfikacja ciał niebieskich}
@@ -10,15 +11,17 @@
 \begin{document}
 \maketitle
 \tableofcontents
-
-\section{Streszcznie}
-to na koniec
-\section{Słowa kluczowe}
-Klasyfikacja, Drzewa decyzyjne, Ciała niebieskie, ...
-\section{Wprowadzenie}
-\section{Przedmiot badań}
+\section{Wstęp}
+\subsection{Streszcznie}
+Poniżdzy raport przedstawia pracę wykonaną przez nasz zespół w ramach projektu. Najpierw opisany jest zbór danych użytych do badań, następnie przeprowadzona jest wstępna analiza danych. W kolejnej części raportu opisane są metody klasyfikacji użyte w projekcie. Następnie przedstawione są wyniki badań. W ostatniej części raportu znajduje się podsumowanie oraz wnioski z przeprowadzonych badań.
+\subsection{Słowa kluczowe}
+Klasyfikacja, Ciała niebieskie, Uczenie Maszynowe, Prawdobodobieństwo, Las Losowy, metoda KNN, metoda Bayesa.
+\subsection{Wprowadzenie}
+Sloan Digital Sky Survey często udostępnia dane zebrane w trakcie swoich obserwacji. Zdecydowaliśmy się na wykorzystanie tych danych, aby zamodelować klasyfikator ciał niebieskich. Fascynującym aspektem pracy nad tym projektem było to, że pracujemy na prawdziwych danych. Stworzony przez nas model, mimo że niedokładny i gorszy od modeli wykorzystywanych przez agencje kosmiczne i astronomów, spełnia swoje zadanie.\newline
+Do analizy danych skorzystaliśmy z języka programowania Python oraz Jupyter Notebooka. Biblioteki, którymi się posługiwaliśmy to Pandas oraz Scikit-Learn, a także inne pomocnicze biblioteki jak Matplotlib.
+\subsection{Przedmiot badań}
 Celem projektu jest stworzenie hybrydowego modelu klasyfikującego ciała niebieskie na podstawie ich parametrów fizycznych.
-W tym celu zostaną wykorzystane trzy metody klasyfikacji: X, drzewa decyzyjne oraz X.
+W tym celu zostaną wykorzystane trzy metody klasyfikacji: las losowy, KNN(metoda k Najbliższych Sąsiadów) oraz metoda Bayesa.
 W pierwszej części projektu zostaną przeprowadzone badania na rzeczywistych danych z bazy Sloan Digital Sky Survey
 udostępnionej do domeny publicznej, a następnie na sztucznych danych.
 W ostatniej części projektu zostanie stworzony model hybrydowy, który będzie łączył w sobie wszystkie trzy metody klasyfikacji.
@@ -27,8 +30,8 @@ Dane pochodzą ze strony Kaggle.com i są udostępnione do domeny publicznej. Zb
 użytkownika FEDESORIANO i jest zbiorem danych z bazy Sloan Digital Sky Survey udostępnionym do domeny publicznej.
 Zbiór danych zawiera informacje o 10 tysiącach ciał niebieskich.
 \subsection{Opis danych}
-Każde ciało niebieskie jest opisane przez 17 parametrów fizycznych.
-\begin{enumerate}
+Każde ciało niebieskie opisane jest przez 17 parametrów fizycznych.
+\begin{itemize}
     \item obj\_ID = Unikalny identyfikator obiektu w katalogu obrazów używanym przez CAS.
     \item alpha = Kąt rektascensji (w epoce J2000).
     \item delta = Kąt deklinacji (w epoce J2000).
@@ -47,14 +50,60 @@ Każde ciało niebieskie jest opisane przez 17 parametrów fizycznych.
     \item plate = ID płyty, identyfikujące każdą płytę w SDSS.
     \item MJD = Zmodyfikowana data juliańska, używana do wskazania momentu pobrania danych SDSS.
     \item fiber\_ID = ID włókna, które skierowało światło na płaszczyznę ogniskową w każdej obserwacji.
-    \end{enumerate}
+    \end{itemize}
 \subsection{Przygotowanie danych}
-Dane zostały pobrane ze strony Kaggle.com w formacie csv. Następnie zostały wczytane do pliku Jupyter Notebook \"
-Prepare\_sets\". W tym pliku dane zostały podzielone na zbiór treningowy i testowy w proporcji 80\% do 20\%.
-\subsection{Wstępna analiza danych}
+Dane zostały pobrane ze strony Kaggle.com w formacie csv. Następnie zostały wczytane do pliku Jupyter Notebook "Prepare\_sets". W tym pliku dane zostały podzielone na zbiór treningowy i testowy w proporcji 80\% do 20\%.
 
 \section{Opis metod}
-W naszym projekcie zedydowaliśmy się na skorzystanie z trzech metod klasyfikacji: lasu losowego, drzewa decyzyjnego oraz k najbliższych sąsiadów.
+W naszym projekcie zedydowaliśmy się na skorzystanie z trzech metod klasyfikacji: lasu losowego, metody Bayesa oraz k najbliższych sąsiadów.
+\subsection{Odchylenie standardowe}
+Odchylenie standardowe \index{Odchylenie standardowe} to miara, która określa jak bardzo wartości pewnej cechy są rozproszone wokół jej średniej wartości. Im mniejsza wartość odchylenia standardowego, tym bardziej skupione są obserwacje wokół średniej. Odchylenie standardowe jest obliczane jako pierwiastek kwadratowy z wariancji, czyli średniej arytmetycznej kwadratów różnic pomiędzy wartościami cechy a jej średnią wartością. W przypadku populacji skończonej, odchylenie standardowe jest średnią kwadratową różnic pomiędzy wartościami zmiennej a jej średnią arytmetyczną. Aby obliczyć odchylenie standardowe, można skorzystać z następującego wzoru ~\ref{eq:delta}:
+\begin{equation}
+    \delta = \sqrt{\frac{\sum_{i=1}^n(x_i-\overline{x})^2}{n-1}}
+    \label{eq:delta}
+\end{equation}
+\subsection{Skośność}
+Skośność \index{Skośność} to miara asymetrii rozkładu, która określa, czy wartości cechy w populacji są rozłożone symetrycznie wokół średniej. Skośność dodatnia oznacza, że rozkład cechy ma więcej wartości skupionych w lewej (ujemnej) części osi, a mniej w prawej (dodatniej) części. Skośność ujemna oznacza, że rozkład cechy ma więcej wartości skupionych w prawej (dodatniej) części osi, a mniej w lewej (ujemnej) części. Wzór na skośność określa, jak bardzo wartości cechy rozkładają się w jednym lub drugim kierunku i jest wyznaczany poprzez średnią arytmetyczną trzecich potęg odchyleń od średniej~(\ref{eq:skos}):
+\begin{equation}
+    \frac{n}{(n-1)(n-2)}\sum_{i=1}^{n}(x_i-\overline{x})^3 \, .
+    \label{eq:skos}
+\end{equation}
+
+\subsection{Mediana}
+Mediana \index{Mediana} dla zbioru wartości zmiennej, to wartość, która dzieli zmienną na dwie równe części. Oznacza to, że połowa obserwacji przyjmuje niższą wartość, a druga połowa -- wyższą. Mediana oznacza się ze wzorów:
+\begin{itemize}
+    \item gdy $n$ jest nieparzyste~(\ref{eq:nnparz})
+    \begin{equation}
+        M_e = x_{\frac{n+1}{2}}
+        \label{eq:nnparz}
+    \end{equation}
+    \item gdy n jest parzyste~\ref{eq:nparz}
+    \begin{equation}
+        M_e = \frac{1}{2}(x_{\frac{n}{2}} + x_{\frac{n}{2}+1})
+        \label{eq:nparz}
+    \end{equation}
+\end{itemize}
+\subsection{Średnia}
+Średnia \index{Średnia} jest najprostszą miarą centralną, tj. taką która opisuje środek rozkładu. Średnia mówi nam jakiej wartości możemy się spodziewać analizując losową obserwację. Wzór ~\ref{eq:sred}:
+\begin{equation}
+     \overline{X} = \frac{1}{n}\sum_{i=1}^{n}X_i \,
+     \label{eq:sred}
+ \end{equation}
+ gdzie $X$ jest zmienną losową.
+
+
+ \subsection{Standaryzacja}
+ Standaryzacja \index{Normalizacja zmiennych!Standaryzacja}, w wyniku której zmienna uzyskuje średnią wartość oczekiwaną zero i odchylenie standardowe równe jeden, wyraża się ją za pomocą wzoru ~\ref{eq:standar}:
+ \begin{equation}
+     z_{ij} = \frac{x_{ij}-\overline{x_j}}{\delta_j}
+     \label{eq:standar}
+ \end{equation}
+ \subsection{Normalizacja}
+ Normalizacja \index{Normalizacja zmiennych!Normalizacja} – procedura wstępnej obróbki danych w celu umożliwienia ich wzajemnego porównywania i dalszej analizy ~\ref{eq:norm}:
+ \begin{equation}
+     z_{ij} = \frac{x_{ij}-\overline{x_j}}{\sqrt{\sum_{i=1}^{n}(x_{ij}-\overline{x_j})^2}}
+     \label{eq:norm}
+ \end{equation}
 \subsection{Las losowy}
 Metoda lasu losowego, znana również jako las decyzyjny (random forest), jest popularnym algorytmem uczenia maszynowego stosowanym w problemach klasyfikacji, regresji i innych zadań predykcyjnych. Wykorzystuje połączenie wielu drzew decyzyjnych, które są tworzone na podstawie losowych podzbiorów danych uczących i losowych podzbiorów cech. \newline
 Ogólne działanie algorytmu lasu losowego można opisać następująco:
@@ -67,16 +116,281 @@ Ogólne działanie algorytmu lasu losowego można opisać następująco:
 
     \item Klasyfikacja i predykcja: Gdy cały las decyzyjny jest zbudowany, klasyfikacja i predykcja odbywają się na podstawie głosowania lub średniej wyników ze wszystkich drzew. W przypadku klasyfikacji, klasa, która otrzymuje największą liczbę głosów, jest uznawana za wynik. W przypadku regresji, średnia wartość prognozowana przez wszystkie drzewa jest brana pod uwagę jako wynik.
 \end{enumerate}
-\subsection{Metoda 2}
-\subsection{Metoda 3}
+\subsection{KNN}
+K-najbliższych sąsiadów (KNN) to popularna metoda klasyfikacji i regresji w dziedzinie uczenia maszynowego. Opiera się na prostym założeniu, że podobne obiekty mają tendencję do występowania w podobnym otoczeniu.
+
+Główne kroki w metodzie KNN to:
+\begin{enumerate}
+\item Przygotowanie danych: Na początku musimy przygotować nasze dane treningowe, które będą składać się z wektorów cech i odpowiadających im etykiet (dla problemów klasyfikacji) lub wartości docelowych (dla problemów regresji).
+\item Wybór liczby sąsiadów (K): Następnie musimy wybrać liczbę sąsiadów, czyli K, która określa, ile najbliższych sąsiadów zostanie wziętych pod uwagę przy przewidywaniu klasy lub wartości dla nowych przykładów.
+\item Obliczanie odległości: Dla nowego przykładu, który chcemy sklasyfikować lub dla którego chcemy przewidzieć wartość, obliczamy odległość między tym przykładem a każdym przykładem treningowym. Najczęściej stosuje się odległość euklidesową.
+\item Wybór K najbliższych sąsiadów: Wybieramy K najbliższych sąsiadów na podstawie obliczonych odległości. Możemy użyć różnych kryteriów do wyboru, np. najmniejszej odległości, największej podobieństwa lub kombinacji obu.
+\item Dokonanie predykcji: W przypadku klasyfikacji, klasyfikujemy nowy przykład na podstawie etykiet K najbliższych sąsiadów. Możemy zastosować prostą większość głosów lub uwzględnić odległość do sąsiadów. W przypadku regresji, przewidujemy wartość na podstawie średniej lub mediany wartości K najbliższych sąsiadów.
+\end{enumerate}
+\subsection{Metoda Bayesa}
+Metoda Bayesa, znana również jako klasyfikator Bayesa, to algorytm klasyfikacji statystycznej oparty na teorii prawdopodobieństwa. Wykorzystuje on twierdzenie Bayesa do oszacowania prawdopodobieństwa przynależności do danej klasy na podstawie cech obiektu.
+
+Główne kroki w metodzie Bayesa to:
+\begin{enumerate}
+    \item Przygotowanie danych: Na początku musimy przygotować dane treningowe, które będą składać się z wektorów cech i odpowiadających im etykiet klas.
+    \item Obliczanie prawdopodobieństw a priori: Na podstawie danych treningowych obliczamy prawdopodobieństwa a priori dla każdej klasy. Prawdopodobieństwo a priori oznacza szansę wystąpienia danej klasy w populacji przed uwzględnieniem jakichkolwiek cech.
+    \item Obliczanie prawdopodobieństw warunkowych: Dla każdej cechy i każdej klasy obliczamy prawdopodobieństwo warunkowe, czyli jakie jest prawdopodobieństwo wystąpienia danej cechy, jeśli obiekt należy do danej klasy. To obliczane jest na podstawie wystąpienia danej cechy w klasie w danych treningowych.
+    \item Klasyfikacja nowego przykładu: Gdy mamy obliczone prawdopodobieństwa a priori i warunkowe, możemy przystąpić do klasyfikacji nowego przykładu. Obliczamy wartość funkcji Bayesa dla każdej klasy, która jest iloczynem prawdopodobieństw a priori i warunkowych dla wszystkich cech. Następnie przypisujemy przykład do klasy, dla której wartość funkcji Bayesa jest największa.
+\end{enumerate}
+Metoda Bayesa ma solidne teoretyczne podstawy i dobrze radzi sobie w przypadku, gdy dane mają pewne rozkłady prawdopodobieństwa.
 \subsection{Model hybrydowy}
-SCORE trzeba policzyć dla każdego modelu dla każdego itemu i wtedy średnią ważoną z tych wyników. Póki co modele zwracają predykcje,a mają zwrócić score. Mimo że wyniki będą mniej dokład to pewnie będą bardziej stabilne
+Model hybrydowy analizy danych to podejście, w którym łączy różne techniki i metody analizy danych w celu uzyskania lepszych wyników i wydajności w rozwiązywaniu konkretnego problemu. \newline
+W naszym modelu połączyliśmy predykcje trzech wcześniej opisanych modeli: lasu losowego, knn oraz Bayesa. Prawdopodobieństwa każdej klasy obliczone przez te modele dla każdego analizowanego rekordu uśredniane są w naszym modelu z użyciem średniej ważonej. Wagi przypisaliśmy w następujący sposób:
 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Model} & \textbf{Waga} \\
+    \hline
+    Random Forest & 0.6 \\
+    \hline
+    KNN & 0.25 \\
+    \hline
+    Bayes & 0.15\\
+    \hline
+\end{tabular}
+    \caption{Wagi modelu hybrydowego}
+\end{table}
+Następnie na podstawie uśrednionych prawdopodobieństw model przewiduje klasy dla każdego rekordu.
+\section{Wstępna analiza danych}
+W ramach wstępnej analizy danych obliczone zostały nastepujące wartości: średnia, mediana, pierwszy i trzeci kwartyl oraz odchylenie standardowe .
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Projekt2/data_exploration.jpeg}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+\subsection{Histogramy}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Projekt2/histogramy.jpg}
+    \caption{Histogramy}
+\end{figure}
+\subsection{Boxploty}
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h1.jpg}
+    \caption{Alpha}
+    \label{fig:image1}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h2.jpg}
+    \caption{Delta}
+    \label{fig:image2}
+  \end{minipage}
+
+  \vspace{1em}
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h3.jpg}
+    \caption{u}
+    \label{fig:image3}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h4.jpg}
+    \caption{g}
+    \label{fig:image4}
+  \end{minipage}
+
+  \vspace{1em}
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h5.jpg}
+    \caption{r}
+    \label{fig:image5}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h6.jpg}
+    \caption{i}
+    \label{fig:image6}
+  \end{minipage}
+
+  \vspace{1em}
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h7.jpg}
+    \caption{z}
+    \label{fig:image7}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h8.jpg}
+    \caption{run\_ID}
+    \label{fig:image8}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h9.jpg}
+    \caption{return\_ID}
+    \label{fig:image9}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h10.jpg}
+    \caption{cam_col}
+    \label{fig:image10}
+  \end{minipage}
+
+  \vspace{1em}
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h11.jpg}
+    \caption{field\_ID}
+    \label{fig:image11}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h12.jpg}
+    \caption{spec\_obj\_ID}
+    \label{fig:image12}
+  \end{minipage}
+
+  \vspace{1em}
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h13.jpg}
+    \caption{redshift}
+    \label{fig:image13}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h14.jpg}
+    \caption{plate}
+    \label{fig:image14}
+  \end{minipage}
+
+  \vspace{1em}
+
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h15.jpg}
+    \caption{MJD}
+    \label{fig:image15}
+  \end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{h16.jpg}
+    \caption{fiber\_ID}
+    \label{fig:image16}
+  \end{minipage}
+
+  \caption{Grid of images}
+  \label{fig:grid}
+\end{figure}
 \section{Rezultaty}
-\section{Użycie modeli na sztucznych danych}
-\section{Wnioski}
-to na koniec
-\section{Bibliografia}
-to na koniec
+\subsection{Metoda lasu losowego}
+Po zastosowaniu metody lasu losowego na naszych danych otrzymaliśmy następujące score'y:
 
-\end{document}
+\begin{itemize}
+    \item Accuracy: 0.9739013049347532
+    \item F1 score: 0.9737017563153201
+\end{itemize}
+oraz confusion matrix:
+\begin{figure}[H]
+    \centering
+    \includegraphics{Projekt2/confusion_matrix_random_forest.jpg}
+    \caption{Confusion matrix dla metody lasu losowego}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Metoda KNN}
+Po zastosowaniu metody KNN na naszych danych otrzymaliśmy następujące score'y:
+
+\begin{itemize}
+    \item Accuracy: 0.7302634868256587
+    \item F1 score: 0.7121522158944027
+\end{itemize}
+oraz confusion matrix:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Projekt2/confusion_matrix_KNN.jpg}
+    \caption{Confusion matrix dla metody KNN}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Metoda Bayesa}
+Po zastosowaniu metody lasu losowego na naszych danych otrzymaliśmy następujące score'y:
+
+\begin{itemize}
+    \item Accuracy: 0.6008699565021749
+    \item F1 score: 0.4811373917314984
+\end{itemize}
+oraz confusion matrix:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Projekt2/confusion_matrix_bayes.jpg}
+    \caption{Confusion matrix dla metody Bayesa}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Metoda hybrydowa}
+Po zastosowaniu metody hybrydowej na naszych danych otrzymaliśmy następujące score'y:
+
+\begin{itemize}
+    \item Accuracy: 0.9732013399330034
+    \item F1 score: 0.9683268956907608
+\end{itemize}
+oraz confusion matrix:
+\begin{figure}[H]
+    \centering
+    \includegraphics{Projekt2/confusion_matrix_hybr.jpg}
+    \caption{Confusion matrix dla metody hybrydowej}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Wnioski}
+Projekt zakładał stworzenie hybrydowego modelu klasyfikującego. Udało się tego dokonać, nie tracąc dokładności predykcji, a wręcz tę dokładność poprawiając. Modele klasyfiujące działając w pojedynkę gorzej radzą sobie z klasyfikacją niż model hybrydowy. Istotne jest także to, że wyniki modelu hybrydowego są znacznie bardziej "stabilne" niż te proponowane przez oddzielnie działające modele.
+\section{Krótki przewodnik po Jupyter Notebooku}
+Notatnik Jupyter to narzędzie do interaktywnego opracowywania i prezentowania projektów -- zwłaszcza tych z analizy danych. \newline
+W przesłanym przez nas projekcie znajdują się następujące pliki:
+\begin{itemize}
+    \item star\_classification.csv -- plik z oryginalnymi danymi
+    \item Prepare\_sets.ipynb -- w tym notebooku dzielimy wejściowe dane na set testowy i treningowy w proporcji 20 do 80. Zapisujemy sety do plików csv
+    \item X\_train.csv, X\_test.csv, y\_test.csv, y\_train.csv -- pliki z setami treningowymi i testowymi
+    \item random\_forest.ipynb -- notebook zawierający metodę lasu losowego. Zapisujemy predykcje do pliku csv.
+    \item k\_nearest\_neighbours.ipynb -- notebook zawierający metodę KNN. Porównaliśmy wyniki predykcji różnymi metrykami i wybraliśmy tę najdokładniejszą - hamminga.  Zapisujemy predykcje do pliku csv.
+    \item naive\_bayes.ipynb -- notebook zawierający metodę Bayesa. Zapisujemy predykcje do pliku csv.
+    \item y\_pred\_proba\_rf.csv, y\_pred\_proba\_knn.csv, y\_pred\_proba\_bay.csv -- pliki z predykcjami modeli
+    \item hybryd\_model.ipynb -- w tym notebooku wyliczamy średnią z poprzednich modeli dla każdej klasy każdego rekordu, a następnie przewidujemy na tej podstawie klasę obiektu.
+    \item decision\_tree.ipynb - notebook zawierający model drzewa decyzyjnego. Nie jest używany z powodu błędnych wyników.
+    \item raport.tex -- plik zawierający nieskompilowany kod latex z tego raportu
+\end{itemize}
+Aby wykonać kod w jednej komórce należy stanąć w niej kursorem i wcisnąć Shift + Enter. Natomiast aby skompilować kod w całym notebooku należy kliknąć przycisk z dwoma zielonymi strzałkami.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{jpnb.png}
+    \caption{Zielone strzałki}
+    \label{fig:enter-label}
+\end{figure}
+\section{Źródła}
+ W trakcie przeprowadzania projektu wykorzystany został podręcznik, materiały wykładowe Pana profesora Furmańczyka, materiały ćwiczeniowe Pana magista Paczutkowskiego. Wykorzystane zostały także materiały dostępne w internecie:
+ \begin{itemize}
+     \item \href{https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17}{Kaggle dataset}
+     \item \href{https://scikit-learn.org/stable/user_guide.html}{Dokumentacja SciKit Learn}
+     \item \href{https://docs.python.org/3/}{Dokumentacja Python}
+     \item \href{https://en.wikipedia.org/wiki/Main_Page}{Wikipedia}
+ \end{itemize}
+
+ \end{document}

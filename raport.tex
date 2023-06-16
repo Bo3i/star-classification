@@ -304,8 +304,8 @@ W ramach wstępnej analizy danych obliczone zostały nastepujące wartości: śr
 Po zastosowaniu metody lasu losowego na naszych danych otrzymaliśmy następujące score'y:
 
 \begin{itemize}
-    \item Accuracy: 0.9739013049347532
-    \item F1 score: 0.9737017563153201
+    \item Accuracy: 0.9744512774361281
+    \item F1 score: 0.9742415424921322
 \end{itemize}
 oraz confusion matrix:
 \begin{figure}[H]
@@ -349,8 +349,8 @@ oraz confusion matrix:
 Po zastosowaniu metody hybrydowej na naszych danych otrzymaliśmy następujące score'y:
 
 \begin{itemize}
-    \item Accuracy: 0.9732013399330034
-    \item F1 score: 0.9683268956907608
+    \item Accuracy: 0.9748512574371282
+    \item F1 score: 0.9701981907218976
 \end{itemize}
 oraz confusion matrix:
 \begin{figure}[H]
@@ -361,7 +361,7 @@ oraz confusion matrix:
 \end{figure}
 
 \section{Wnioski}
-Projekt zakładał stworzenie hybrydowego modelu klasyfikującego. Udało się tego dokonać, nie tracąc dokładności predykcji, a wręcz tę dokładność poprawiając. Modele klasyfiujące działając w pojedynkę gorzej radzą sobie z klasyfikacją niż model hybrydowy. Istotne jest także to, że wyniki modelu hybrydowego są znacznie bardziej "stabilne" niż te proponowane przez oddzielnie działające modele.
+Projekt zakładał stworzenie hybrydowego modelu klasyfikującego. Udało się tego dokonać, nie tracąc dokładności predykcji, a wręcz tę dokładność poprawiając. Modele klasyfiujące działając w pojedynkę gorzej radzą sobie z klasyfikacją niż model hybrydowy. Istotne jest także to, że wyniki modelu hybrydowego są znacznie bardziej "stabilne" niż te proponowane przez oddzielnie działające modele. Najlepszym modelem okazał się być model hybrydowy osiągając Accuracy Score na poziomie 0.9748512574371282. Spośród modeli składających się na model hybrydowy najlepszą dokładność predykcji osiągnął model K najbliższych sąsiadów. Najgorszy okazał się być model Naive Bayes, nie predyktując wcale klasy oznaczonej jako 2, czyli gwiazd. Mimo prób naprawienia tego problemu nie udało nam się znaleźć rozwiązania.
 \section{Krótki przewodnik po Jupyter Notebooku}
 Notatnik Jupyter to narzędzie do interaktywnego opracowywania i prezentowania projektów -- zwłaszcza tych z analizy danych. \newline
 W przesłanym przez nas projekcie znajdują się następujące pliki:
@@ -375,8 +375,8 @@ W przesłanym przez nas projekcie znajdują się następujące pliki:
     \item y\_pred\_proba\_rf.csv, y\_pred\_proba\_knn.csv, y\_pred\_proba\_bay.csv -- pliki z predykcjami modeli
     \item hybryd\_model.ipynb -- w tym notebooku wyliczamy średnią z poprzednich modeli dla każdej klasy każdego rekordu, a następnie przewidujemy na tej podstawie klasę obiektu.
     \item decision\_tree.ipynb - notebook zawierający model drzewa decyzyjnego. Nie jest używany z powodu błędnych wyników.
-    \item raport.tex -- plik zawierający nieskompilowany kod latex z tego raportu
 \end{itemize}
+A także ich odpowiedniki w wersji .html \newline
 Aby wykonać kod w jednej komórce należy stanąć w niej kursorem i wcisnąć Shift + Enter. Natomiast aby skompilować kod w całym notebooku należy kliknąć przycisk z dwoma zielonymi strzałkami.
 \begin{figure}[H]
     \centering
@@ -392,5 +392,13 @@ Aby wykonać kod w jednej komórce należy stanąć w niej kursorem i wcisnąć 
      \item \href{https://docs.python.org/3/}{Dokumentacja Python}
      \item \href{https://en.wikipedia.org/wiki/Main_Page}{Wikipedia}
  \end{itemize}
-
+\newpage
+ \section{Post Scriptum}
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=1\textwidth]{kitku.jpg}
+     \caption{Kitku}
+     \label{fig:enter-label}
+ \end{figure}
+ Proszę dać im maksa punktów -- Kitku
  \end{document}

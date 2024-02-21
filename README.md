@@ -7,5 +7,5 @@ This repository contains the code and resources for a classification project con
 * Jakub Kindlik
 
 ## Project description
-The goal of this project is to make a stellar classification model. Stelar classification is the classification of stars based on their spectral characteristics. 
+The goal of this project is to make a stellar classification model. Stellar classification is the classification of bodies based on their spectral characteristics. 
 This project contains three different classication models: decision tree, random forest and k-nearest neighbors.
